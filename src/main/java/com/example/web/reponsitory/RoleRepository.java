@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Integer> {
     @Query(value = "select * from Roles r where r.role_id  in (select u.role_id from Users u where u.user_name = :userName)", nativeQuery = true)
-    Role getRoleByUserId(@Param("userName") int UserId);
+    Role getRoleByUserName(@Param("userName") String UserName);
     Role findRoleByRoleName(String roleName);
-
-    @Query(value ="select * from menu m where m.menu_id in(select mr.menu_id from RoleMenu mr where mr.role_id \n" +
-            "in(select r.role_id from Roles r where r.user_id = :userId)", nativeQuery = true)
-    List<Menu> getMenuByUserId(@Param("userId") int userId);
+    @Query(value = "select * from Roles r where r.role_id  in (select u.role_id from Users u where user_id = :userId)", nativeQuery = true)
+    Role getRoleByUserId(@Param("userId") int UserId);
+//    @Query(value ="select * from menu m where m.menu_id in(select mr.menu_id from RoleMenu mr where role_id = :roleId", nativeQuery = true)
+//    List<Menu> getMenuByRoleId(@Param("roleId") int roleId);
 }

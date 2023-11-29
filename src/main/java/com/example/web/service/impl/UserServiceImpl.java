@@ -2,8 +2,10 @@ package com.example.web.service.impl;
 
 
 
+import com.example.web.dto.MenuDTO;
 import com.example.web.dto.UserDTO;
 
+import com.example.web.entity.Menu;
 import com.example.web.entity.Role;
 import com.example.web.entity.User;
 import com.example.web.reponsitory.RoleRepository;
@@ -15,7 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.util.List;
 
 @Service("UserService")
 @Slf4j

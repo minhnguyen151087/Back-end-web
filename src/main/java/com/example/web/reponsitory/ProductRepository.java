@@ -23,4 +23,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 //    ProductDTO findById(@Param("product_id") int product_id);
     @Query(value = "select * from Products  where product_id = :productId", nativeQuery = true)
     Product findById(@Param("productId")int productId);
+    @Query(value ="select * from Products where category_id = :categoryId", nativeQuery = true)
+    List<ProductDTO> findByCategoryId(@Param("categoryId")int categoryId);
+    List<ProductDTO> findByProductName(String productName);
+    @Query(value ="select * from Products where category_id = :categoryId and productName = :productName", nativeQuery = true)
+    List<ProductDTO> findByCategoryIdAndProductName(@Param("categoryId")int categoryId,@Param("productName") String productName);
+
 }

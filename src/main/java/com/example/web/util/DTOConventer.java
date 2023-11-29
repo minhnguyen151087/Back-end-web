@@ -1,19 +1,10 @@
 package com.example.web.util;
 
-import com.example.web.dto.CategoryDTO;
-import com.example.web.dto.ProductDTO;
-import com.example.web.dto.RoleDTO;
-import com.example.web.dto.UserDTO;
-import com.example.web.entity.Category;
-import com.example.web.entity.Product;
-import com.example.web.entity.Role;
-import com.example.web.entity.User;
-import com.example.web.model.product.ProductDetail;
+import com.example.web.dto.*;
+import com.example.web.entity.*;
+import com.example.web.dto.ProductDetail;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DTOConventer {
@@ -25,7 +16,6 @@ public class DTOConventer {
 
     public ProductDTO productToDto (Product product){
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-
         CategoryDTO cartegoryResponse = categoryToDTO(product.getCategory());
         productDTO.setCategory(cartegoryResponse);
         return productDTO;
@@ -45,5 +35,8 @@ public class DTOConventer {
         RoleDTO roleDTOResponse = roleToDto(user.getRole());
         userDTO.setRole(roleDTOResponse);
         return userDTO;
+    }
+    public MenuDTO menuToDTO(Menu menu){
+        return modelMapper.map(menu, MenuDTO.class);
     }
 }

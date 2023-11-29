@@ -1,4 +1,4 @@
-package com.example.web.model.product;
+package com.example.web.dto;
 
 //import com.example.web.entity.OrderDetail;
 import lombok.AllArgsConstructor;

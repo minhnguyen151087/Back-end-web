@@ -32,6 +32,21 @@ public class ProductServiceImpl implements ProductService {
         return productDTOList;
     }
     @Override
+    public List<ProductDTO> getProductByCategory(int category_id){
+        return productRepository.findByCategoryId(category_id);
+    }
+    @Override
+    public List<ProductDTO> getProductByProductName(String productName){
+        return productRepository.findByProductName(productName);
+    }
+
+
+
+    @Override
+    public List<ProductDTO> getProductFilter(int category_id, String productName){
+        return productRepository.findByCategoryIdAndProductName(category_id, productName);
+    }
+    @Override
     public ProductDTO update(ProductDTO productDTO, int productId){
         Product newProduct  = productRepository.findById(productDTO.getProductId());
         Category category = categoryRepository.findByCategoryID(productDTO.getCategoryId());

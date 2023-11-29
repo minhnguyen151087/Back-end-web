@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface RoleService {
-    List<Menu> getListMenuByUserId(int userId);
 }

@@ -3,11 +3,14 @@ package com.example.web.controller;
 
 import com.example.web.config.JwtTokenUtil;
 import com.example.web.config.JwtUserService;
+import com.example.web.dto.MenuDTO;
 import com.example.web.dto.UserDTO;
+import com.example.web.entity.Menu;
 import com.example.web.entity.Role;
 import com.example.web.entity.User;
 import com.example.web.model.user.UserModel;
 import com.example.web.reponsitory.UserReponsitory;
+import com.example.web.service.MenuService;
 import com.example.web.service.RoleService;
 import com.example.web.service.UserService;
 import com.example.web.util.DTOConventer;
@@ -47,7 +50,8 @@ public class UserController {
     RoleService roleService;
     @Autowired
     DTOConventer dtoConventer;
-
+    @Autowired
+    MenuService menuService;
 
     @Autowired
     JwtTokenUtil jwtTokenUtil;
@@ -66,8 +70,9 @@ public class UserController {
         //chuyển dữ liệu password sang dạng mã hóa token
         String token = jwtTokenUtil.generateToken(authentication);
         //get role thuộc người dùng này
-        Role roleList = userService.getRoleByUserId(userRequest.getUser_id());
-        return new ResponseEntity<>(new UserModel(token, roleList), HttpStatus.OK);
+        Role role = userService.getRoleByUserId(userRequest.getUser_id());
+        List<Menu> menuList = menuService.getListMenuByRoleId(role.getRoleId());
+        return new ResponseEntity<>(new UserModel(token, role,menuList), HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Tên đăng nhập hoặc mật khẩu không đúng!", HttpStatus.BAD_REQUEST);
         }

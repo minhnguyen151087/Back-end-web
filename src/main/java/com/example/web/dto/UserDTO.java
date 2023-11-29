@@ -17,6 +17,5 @@ public class UserDTO {
     private String password;
     private String contact;
     private RoleDTO role;
-    private List<MenuDTO> menuDTOS;
     private String address;
 }

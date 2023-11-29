@@ -17,8 +17,5 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
-    @Override
-    public List<Menu> getListMenuByUserId(int userId) {
-        return roleRepository.getMenuByUserId(userId);
-    }
+
 }

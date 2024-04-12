@@ -1,6 +1,7 @@
 package com.example.web.reponsitory;
 
 import com.example.web.dto.ProductDTO;
+import com.example.web.dto.ProductDetail;
 import com.example.web.entity.Menu;
 import com.example.web.entity.Product;
 import lombok.Value;
@@ -24,9 +25,11 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query(value = "select * from Products  where product_id = :productId", nativeQuery = true)
     Product findById(@Param("productId")int productId);
     @Query(value ="select * from Products where category_id = :categoryId", nativeQuery = true)
-    List<ProductDTO> findByCategoryId(@Param("categoryId")int categoryId);
-    List<ProductDTO> findByProductName(String productName);
-    @Query(value ="select * from Products where category_id = :categoryId and productName = :productName", nativeQuery = true)
-    List<ProductDTO> findByCategoryIdAndProductName(@Param("categoryId")int categoryId,@Param("productName") String productName);
+    List<Product> findByCategoryId(@Param("categoryId")int categoryId);
+    List<Product> findByProductName(String productName);
+    @Query(value ="select * from Products where category_id = :categoryId and product_name = :productName", nativeQuery = true)
+    List<Product> findByCategoryIdAndProductName(@Param("categoryId")int categoryId,@Param("productName") String productName);
+    @Query(value = "select p.product_id, p.description, p.function_product,p.product_ingredients from products p where p.product_id = :productId",nativeQuery = true)
+    ProductDetail getProductDetailById(@Param("productId") int productId);
 
 }

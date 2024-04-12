@@ -9,6 +9,7 @@ import com.example.web.entity.Menu;
 import com.example.web.entity.Role;
 import com.example.web.entity.User;
 import com.example.web.model.user.UserModel;
+import com.example.web.model.user.UserRequestModel;
 import com.example.web.reponsitory.UserReponsitory;
 import com.example.web.service.MenuService;
 import com.example.web.service.RoleService;
@@ -25,10 +26,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RestController
@@ -52,15 +52,14 @@ public class UserController {
     DTOConventer dtoConventer;
     @Autowired
     MenuService menuService;
-
     @Autowired
     JwtTokenUtil jwtTokenUtil;
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
-        User userRequest = userService.getUserByUserNamePassword(userDTO.getUserName(), userDTO.getPassword());
+    public ResponseEntity<?> authenticate(@Valid @RequestBody UserRequestModel userRequest) {
+        User user = userService.getUserByUserNamePassword(userRequest.getUserName(), userRequest.getPassword());
         if(userRequest != null){
-        dtoConventer.userToDto(userRequest);
-        //autheitcate thư viện dùng để phân quyền trong spring boots
+        dtoConventer.userToDto(user);
+        //authenticate thư viện dùng để phân quyền trong spring boots
         //lưu dữ liệu userName pass vào header
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -70,14 +69,13 @@ public class UserController {
         //chuyển dữ liệu password sang dạng mã hóa token
         String token = jwtTokenUtil.generateToken(authentication);
         //get role thuộc người dùng này
-        Role role = userService.getRoleByUserId(userRequest.getUser_id());
+        Role role = userService.getRoleByUserId(user.getUser_id());
         List<Menu> menuList = menuService.getListMenuByRoleId(role.getRoleId());
-        return new ResponseEntity<>(new UserModel(token, role,menuList), HttpStatus.OK);
+        return new ResponseEntity<>(new UserModel(user,token, role,menuList), HttpStatus.OK);
         }else{
             return new ResponseEntity<>("Tên đăng nhập hoặc mật khẩu không đúng!", HttpStatus.BAD_REQUEST);
         }
     }
-    
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDTO userDTO){
         if(userReponsitory.existsByUserName(userDTO.getUserName())){

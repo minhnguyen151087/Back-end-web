@@ -1,6 +1,7 @@
 package com.example.web.service;
 
 import com.example.web.dto.ProductDTO;
+import com.example.web.dto.ProductDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface ProductService {
     List<ProductDTO> getProductFilter(int category_id, String productName);
 
     ProductDTO update(ProductDTO productDTO, int productId);
+
+    ProductDetail getProductDetail(int productId);
 }

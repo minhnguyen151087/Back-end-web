@@ -18,7 +18,7 @@ public class Product {
     @GeneratedValue
     @Column(name = "product_id")
     private int productId;
-    @Column(name = "product_mame")
+    @Column(name = "product_name")
     private String productName;
     @Column(name = "price")
     private double price;

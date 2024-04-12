@@ -25,7 +25,7 @@ public interface UserReponsitory extends JpaRepository<User, Integer> {
     User getUserByRoleId(@Param("roleId") int roleId);
     @Modifying
     @Query(value = "INSERT INTO Users(user_name,address,contact,password,role_id)VALUES(:userName,:address,:contact,:password,:roleId) ",nativeQuery = true)
-    void saveUser(@Param("userName") String userName, @Param("address") String address, @Param("contact") String contact, @Param("password") String password);
+    void saveUser(@Param("userName") String userName, @Param("address") String address, @Param("contact") String contact, @Param("password") String password,@Param("roleId") int roleId);
 
 
 

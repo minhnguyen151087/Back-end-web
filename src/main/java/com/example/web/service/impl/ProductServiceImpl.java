@@ -1,6 +1,7 @@
 package com.example.web.service.impl;
 
 import com.example.web.dto.ProductDTO;
+import com.example.web.dto.ProductDetail;
 import com.example.web.entity.Category;
 import com.example.web.entity.Product;
 import com.example.web.reponsitory.CategoryRepository;
@@ -10,6 +11,7 @@ import com.example.web.util.DTOConventer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,23 +30,39 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> getProduct() {
-        List<ProductDTO> productDTOList = productRepository.listProduct();
+        List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDTOList =  new ArrayList<>();
+        for(Product product : products){
+            productDTOList.add(dtoConventer.productToDto(product));
+        }
         return productDTOList;
     }
     @Override
     public List<ProductDTO> getProductByCategory(int category_id){
-        return productRepository.findByCategoryId(category_id);
+        List<Product> products = productRepository.findByCategoryId(category_id);
+        List<ProductDTO> productDTOList =  new ArrayList<>();
+        for(Product product : products){
+            productDTOList.add(dtoConventer.productToDto(product));
+        }
+        return productDTOList;
     }
     @Override
     public List<ProductDTO> getProductByProductName(String productName){
-        return productRepository.findByProductName(productName);
+        List<Product> products = productRepository.findByProductName(productName);
+        List<ProductDTO> productDTOList =  new ArrayList<>();
+        for(Product product : products){
+            productDTOList.add(dtoConventer.productToDto(product));
+        }
+        return productDTOList;
     }
-
-
-
     @Override
     public List<ProductDTO> getProductFilter(int category_id, String productName){
-        return productRepository.findByCategoryIdAndProductName(category_id, productName);
+        List<Product> products = productRepository.findByCategoryIdAndProductName(category_id,productName);
+        List<ProductDTO> productDTOList =  new ArrayList<>();
+        for(Product product : products){
+            productDTOList.add(dtoConventer.productToDto(product));
+        }
+        return productDTOList;
     }
     @Override
     public ProductDTO update(ProductDTO productDTO, int productId){
@@ -58,6 +76,10 @@ public class ProductServiceImpl implements ProductService {
         newProduct.setStatus(productDTO.getStatus());
         newProduct.setQuantity(productDTO.getQuantity());
         return dtoConventer.productToDto(productRepository.save(newProduct));
-
+    }
+    @Override
+    public ProductDetail getProductDetail(int productId){
+        ProductDetail productDetail = productRepository.getProductDetailById(productId);
+        return productDetail;
     }
 }

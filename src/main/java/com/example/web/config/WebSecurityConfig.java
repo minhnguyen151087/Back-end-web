@@ -59,7 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers()
                 .permitAll()
-                .antMatchers("/signin", "/register","/home")//Những đường link k cần token vẫn vào được
+                .antMatchers("/signin", "/register","/home",
+                        "getAllProduct","/getProductDetail","/getListProduct")//Những đường link k cần token vẫn vào được
                 .permitAll()
                 .anyRequest()
                 .authenticated();

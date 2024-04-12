@@ -29,7 +29,7 @@ public class Role {
     @ManyToMany
     @JoinTable(name = "RoleMenu",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "meni_id"))
+            inverseJoinColumns = @JoinColumn(name = "menu_id"))
     private List<Menu> menuList;
 
 

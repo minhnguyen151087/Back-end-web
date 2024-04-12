@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final DTOConventer dtoConventer;
 
-    public UserServiceImpl( UserReponsitory userReponsitory, ModelMapper modelMapper, RoleRepository roleRepository, DTOConventer dtoConventer) {
+    public UserServiceImpl(UserReponsitory userReponsitory, ModelMapper modelMapper, RoleRepository roleRepository, DTOConventer dtoConventer) {
         this.userReponsitory = userReponsitory;
         this.modelMapper = modelMapper;
         this.roleRepository = roleRepository;
@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(userDTO.getPassword());
         newUser.setAddress(userDTO.getAddress());
         newUser.setContact(userDTO.getContact());
-        Role role = roleRepository.findRoleByRoleName("customer");
+        Role role = roleRepository.findRoleByRoleName("customer");//để mặc định là khách hàng
         newUser.setRole(role);
-        userReponsitory.saveUser(newUser.getUserName(), newUser.getAddress(), newUser.getContact(), newUser.getPassword());
+        userReponsitory.saveUser(newUser.getUserName(), newUser.getAddress(), newUser.getContact(), newUser.getPassword(), role.getRoleId());
     }
     @Override
     public User checkLogin(String userName, String password){
